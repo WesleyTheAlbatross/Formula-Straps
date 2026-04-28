@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formula Strap | Precision Custom F1 Leather</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: rgba(20, 22, 26, 0.8);
+      --text: #ffffff;
+      --muted: #a0a0a0;
+      --accent: #ff1801; /* F1 Red */
+      --accent-glow: rgba(255, 24, 1, 0.4);
+      --carbon: #1a1a1a;
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 24, 1, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(255, 24, 1, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- NAVIGATION --- */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem 0;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { font-weight: 900; font-style: italic; letter-spacing: -1px; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
+    .brand span { color: var(--accent); }
+
+    /* --- HERO SECTION --- */
+    .hero { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+    h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 0.9; font-weight: 900; margin: 0 0 24px; text-transform: uppercase; font-style: italic; }
+    .highlight { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
+
+    /* --- INTERACTIVE CONFIGURATOR --- */
+    .configurator-card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    }
+
+    #strap-preview {
+      height: 220px;
+      width: 100%;
+      background: #1a1a1a; /* Default Black */
+      border-radius: 12px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      position: relative;
+      border: 2px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+    }
+
+    .preview-texture {
+      position: absolute; inset: 0;
+      background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      opacity: 0.1;
+    }
+
+    .preview-content {
+      z-index: 2; text-align: center;
+    }
+
+    #preview-car { font-size: 3rem; display: block; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+    #preview-initials { font-weight: 900; font-size: 1.5rem; letter-spacing: 4px; color: rgba(255,255,255,0.8); }
+    #preview-track { display: block; font-size: 0.8rem; text-transform: uppercase; opacity: 0.6; margin-top: 5px; }
+
+    /* --- CONTROLS --- */
+    .controls { display: grid; gap: 20px; }
+    .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+    
+    .option-grid { display: flex; gap: 10px; }
+    .swatch {
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: var(--transition);
+    }
+    .swatch.active { border-color: var(--accent); transform: scale(1.1); }
+    
+    input[type="text"], select {
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 12px; color: white; border-radius: 8px; outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+
+    .btn {
+      display: inline-block; padding: 16px 32px; border-radius: 8px;
+      font-weight: 900; text-transform: uppercase; cursor: pointer;
+      transition: var(--transition); border: none; font-style: italic;
+    }
+    .btn-primary { background: var(--accent); color: white; width: 100%; margin-top: 20px; }
+    .btn-primary:hover { background: #ff3c2a; transform: translateY(-2px); box-shadow: 0 10px 20px var(--accent-glow); }
+
+    /* --- FEATURES --- */
+    .features-section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .feat-card {
+      padding: 40px; background: rgba(255,255,255,0.02); border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.05); transition: var(--transition);
+    }
+    .feat-card:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
+    .feat-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; display: block; }
+
+    /* --- MOBILE --- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="brand">FORMULA<span>STRAP</span></div>
+      <div style="display: flex; gap: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">
+        <a href="#customise">Customise</a>
+        <a href="#eco">Materials</a>
+        <a href="#" style="color: var(--accent);">Order Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div style="color: var(--accent); font-weight: 800; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px;">Handcrafted Precision</div>
+        <h1>Engineered for the <span class="highlight">Obsessed.</span></h1>
+        <p style="font-size: 1.2rem; color: var(--muted); margin-bottom: 40px;">
+          The world's only custom watch strap featuring genuine vegetable-tanned leather and laser-etched F1 circuit geometry.
+        </p>
+        <div class="feat-grid" style="grid-template-columns: 1fr 1fr;">
+            <div><strong>Premium Leather</strong><br><small style="color: var(--muted)">Grade A Italian Hide</small></div>
+            <div><strong>Track Etching</strong><br><small style="color: var(--muted)">Laser Precision</small></div>
+        </div>
+      </div>
+
+      <div class="configurator-card" id="customise">
+        <div id="strap-preview">
+          <div class="preview-texture"></div>
+          <div class="preview-content">
+            <span id="preview-car">🏎️</span>
+            <div id="preview-initials">F1</div>
+            <span id="preview-track">Silverstone GP</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="control-group">
+            <label>Leather Color</label>
+            <div class="option-grid">
+              <div class="swatch active" style="background: #1a1a1a;" onclick="updateColor('#1a1a1a', this)"></div>
+              <div class="swatch" style="background: #4a2c1d;" onclick="updateColor('#4a2c1d', this)"></div>
+              <div class="swatch" style="background: #5c5c5c;" onclick="updateColor('#5c5c5c', this)"></div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Circuit Design</label>
+            <select onchange="updateTrack(this.value)">
+              <option value="Silverstone GP">Silverstone</option>
+              <option value="Monaco Street">Monaco</option>
+              <option value="Monza Speed">Monza</option>
+              <option value="Spa-Francorchamps">Spa-Francorchamps</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Personal Initials (Max 3)</label>
+            <input type="text" maxlength="3" placeholder="F1" oninput="updateInitials(this.value)">
+          </div>
+        </div>
+
+        <button class="btn btn-primary">Lock in Design — £45</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="features-section">
+    <div class="feat-grid">
+      <div class="feat-card">
+        <i>🏁</i>
+        <h3>Race DNA</h3>
+        <p>Each strap is imprinted with a minimalist F1 silhouette, signifying your place on the grid.</p>
+      </div>
+      <div class="feat-card">
+        <i>🌿</i>
+        <h3>Sustainable Power</h3>
+        <p>Vegetable-tanned leather that patinas over time, just like the leather in a classic 1970s cockpit.</p>
+      </div>
+      <div class="feat-card">
+        <i>⏱️</i>
+        <h3>Made to Order</h3>
+        <p>No mass production. We cut, stitch, and etch every single strap to your specific configuration.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function updateColor(color, el) {
+      document.getElementById('strap-preview').style.backgroundColor = color;
+      // Update swatches
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function updateTrack(val) {
+      document.getElementById('preview-track').innerText = val;
+    }
+
+    function updateInitials(val) {
+      document.getElementById('preview-initials').innerText = val.toUpperCase() || 'F1';
+    }
+  </script>
+
+</body>
+</html>
