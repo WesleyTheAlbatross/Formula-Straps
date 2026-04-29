@@ -107,9 +107,10 @@ nav {
   box-shadow: 0 40px 80px rgba(0,0,0,1), inset 0 0 20px rgba(0,0,0,0.8), inset 2px 2px 5px rgba(255,255,255,0.1), 0 0 0 2px #333;
   display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 0 auto;
 }
-.watch-face-placeholder::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%); transform: rotate(15deg); pointer-events: none; }
-.watch-screen { color:rgba(255,255,255,0.3); font-size: 10px; font-weight: 900; letter-spacing: 2px; margin-top: 60px; }
+.watch-face-placeholder::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%); transform: rotate(15deg); pointer-events: none; z-index: 5; }
+.watch-screen { color:rgba(255,255,255,0.3); font-size: 10px; font-weight: 900; letter-spacing: 2px; margin-top: 60px; z-index: 10; position: relative; }
 
 /* Lugs */
 .watch-lugs { position: absolute; left: 50%; transform: translateX(-50%); width: calc(var(--strap-width) + 24px); height: 25px; display: flex; justify-content: space-between; z-index: -1; }
@@ -119,18 +120,19 @@ nav {
 .spring-bar { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: calc(var(--strap-width) + 12px); height: 6px; background: linear-gradient(to bottom, #999, #333, #111); border-radius: 4px; box-shadow: 0 5px 10px rgba(0,0,0,0.5); }
 
 /* Apple Watch & Diver Shapes */
-.watch-head.apple .watch-face-placeholder { border-radius: 40px; width: 160px; height: 200px; border: 10px solid #111; }
-.watch-head.diver .watch-face-placeholder { border-radius: 50%; width: 210px; height: 210px; border: 24px solid #1a1a1a; box-shadow: 0 40px 80px rgba(0,0,0,1), inset 0 0 30px rgba(0,0,0,0.9), 0 0 0 4px #444; }
+.watch-head.classic .watch-face-placeholder { border-radius: 50% !important; width: 190px !important; height: 190px !important; border: 14px solid #1a1a1a !important; }
+.watch-head.apple .watch-face-placeholder { border-radius: 40px !important; width: 160px !important; height: 200px !important; border: 10px solid #111 !important; }
+.watch-head.diver .watch-face-placeholder { border-radius: 50% !important; width: 210px !important; height: 210px !important; border: 24px solid #1a1a1a !important; box-shadow: 0 40px 80px rgba(0,0,0,1), inset 0 0 30px rgba(0,0,0,0.9), 0 0 0 4px #444 !important; }
 
 /* --- ENGRAVING --- */
 .engraving-container {
   position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) translateZ(10px);
   width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  pointer-events: none; z-index: 8; mix-blend-mode: multiply; opacity: 0.8;
+  pointer-events: none; z-index: 8; opacity: 0.8; mix-blend-mode: multiply;
 }
-#car-svg-container img { width: 110px; transform: rotate(90deg); filter: invert(1) brightness(0.2) drop-shadow(0 2px 2px rgba(0,0,0,0.5)); }
+#car-svg-container img { width: 110px !important; height: auto !important; transform: rotate(90deg) !important; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)) !important; margin: 20px 0; }
 #track-svg-container { display: flex; justify-content: center; align-items: center; width: 100%; }
-#track-image { max-width: 100px; max-height: 180px; filter: invert(1) brightness(0.2) drop-shadow(0 2px 2px rgba(0,0,0,0.5)); }
+#track-image { max-width: 100px !important; max-height: 180px !important; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)) !important; }
 #strap-initials { font-size: 2.2rem; font-weight: 900; color: #111; letter-spacing: 8px; margin-top: 40px; text-shadow: 0 1px 1px rgba(255,255,255,0.1); }
 
 /* --- CONTROLS --- */

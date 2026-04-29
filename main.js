@@ -360,6 +360,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderClasp();
   updateProgress();
   updatePrice();
+  
+  // Set initial strap styles
+  setColor('#e10600', 'Maranello Red');
+  setTexture('grained', 'Full Grain');
 
   const previewContainer = document.querySelector('.preview-container');
   const watchAssembly = document.getElementById('watch-assembly');
