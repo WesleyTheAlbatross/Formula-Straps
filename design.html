@@ -16,26 +16,74 @@
     <div class="nav-links">
       <a href="design.html" class="active">Customiser</a>
       <a href="ethos.html">Ethos</a>
+      <button class="basket-trigger" onclick="toggleBasket()">
+        <span class="basket-icon">&#128722;</span>
+        <span class="basket-count">0</span>
+      </button>
     </div>
   </nav>
+
+  <!-- Basket Drawer -->
+  <div class="basket-drawer" id="basket-drawer">
+    <div class="basket-header">
+      <h3>Your Basket</h3>
+      <button class="drawer-close" onclick="toggleBasket(false)">&times;</button>
+    </div>
+    <div class="basket-items" id="basket-items"></div>
+    <div class="basket-footer" id="basket-footer">
+      <div class="subtotal"><span>Subtotal</span><span id="basket-subtotal">£0.00</span></div>
+      <button class="btn-primary" style="width: 100%; margin-top: 20px;" onclick="toast('Redirecting to checkout...')">Checkout Now</button>
+    </div>
+  </div>
+
+  <div class="design-progress">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
 
   <main class="config-main">
     <!-- LEFT: PREVIEW -->
     <div class="preview-container">
-      <div class="strap" id="strap">
-        <div class="engraving-container">
-          <!-- Car Graphic (Rotated +90deg as requested) -->
-          <div id="car-svg-container">
-            <img src="image-Picsart-BackgroundRemover.png" alt="F1 Car Silhouette" style="width: 340px; height: auto; transform: rotate(90deg); filter: drop-shadow(10px 15px 15px rgba(0,0,0,0.8));">
+      <div class="studio-glow"></div>
+      
+      <div class="watch-assembly" id="watch-assembly">
+        
+        <!-- 12 O'Clock Strap (Top) -->
+        <div class="strap strap-top grained" id="strap-top">
+          <div class="clasp-container" id="clasp-container"></div>
+          <div class="strap-stitching"></div>
+        </div>
+
+        <!-- Watch Head -->
+        <div class="watch-head classic" id="watch-head">
+          <div class="watch-lugs top-lugs"><div class="lug"></div><div class="lug"></div><div class="spring-bar"></div></div>
+          <div class="watch-face-placeholder" id="watch-face">
+            <div class="watch-screen">SWISS MADE</div>
           </div>
+          <div class="watch-lugs bottom-lugs"><div class="lug"></div><div class="lug"></div><div class="spring-bar"></div></div>
+        </div>
+
+        <!-- 6 O'Clock Strap (Bottom) -->
+        <div class="strap strap-bottom grained" id="strap-bottom">
+          <div class="strap-lining" id="strap-lining"></div>
+          <div class="strap-stitching"></div>
           
-          <!-- Track Graphic -->
-          <div id="track-svg-container">
-            <img id="track-image" src="RaceCircuitAlbertPark.svg" alt="Circuit Layout" style="width: 150px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));">
+          <div class="qr-indicators" id="qr-indicators" style="display:none;">
+            <div class="qr-dot" style="top: 14px;"></div>
           </div>
 
-          <div id="strap-initials">F1</div>
+          <!-- Engraving Layer -->
+          <div class="engraving-container">
+            <div id="car-svg-container"><img src="image-Picsart-BackgroundRemover.png" alt="F1 Car Silhouette"></div>
+            <div id="track-svg-container" style="display:none;"><img id="track-image" src="RaceCircuitAlbertPark.svg" alt="Circuit Layout"></div>
+            <div id="strap-initials">F1</div>
+          </div>
+
+          <!-- Holes -->
+          <div class="strap-holes">
+            <div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -43,97 +91,192 @@
     <div class="controls-container">
       
       <div class="header-text">
-        <h1>Design Your Legacy</h1>
-        <p>Premium vegetable-tanned leather. Precision laser engraving. Choose your finish, select your circuit, and make it yours.</p>
+        <div class="section-eyebrow">Configurator</div>
+        <h1>Personalise</h1>
+        <p>Bespoke racing-grade watch straps.</p>
       </div>
 
-      <!-- COLOR -->
-      <div class="control-group">
-        <h3><span>Leather Finish</span> <span class="selection-label" id="color-label">Carbon Black</span></h3>
-        <div class="color-grid">
-          <div class="swatch active" style="background: #111111;" onclick="setColor('#111111', 'Carbon Black', this)"></div>
-          <div class="swatch" style="background: #8b5a2b;" onclick="setColor('#8b5a2b', 'Traditional Heritage Tan', this)"></div>
-          <div class="swatch" style="background: #061121;" onclick="setColor('#061121', 'Milton Keynes Blue', this)"></div>
-          <div class="swatch" style="background: #dc0000;" onclick="setColor('#dc0000', 'Maranello Red', this)"></div>
-          <div class="swatch" style="background: #ff8700;" onclick="setColor('#ff8700', 'Woking Papaya', this)"></div>
-          <div class="swatch" style="background: #00a19b;" onclick="setColor('#00a19b', 'Silverstone Green', this)"></div>
+      <div class="presets-section" style="margin-bottom: 40px;">
+        <label class="config-label">Quick Race Presets</label>
+        <div class="preset-grid">
+          <button class="preset-card" onclick="applyPreset('ferrari')">
+            <div class="preset-dot" style="background: #e10600;"></div><span>Scuderia</span>
+          </button>
+          <button class="preset-card" onclick="applyPreset('mercedes')">
+            <div class="preset-dot" style="background: #00d2be;"></div><span>Silver Arrow</span>
+          </button>
+          <button class="preset-card" onclick="applyPreset('redbull')">
+            <div class="preset-dot" style="background: #0600ef;"></div><span>Oracle</span>
+          </button>
         </div>
       </div>
 
-      <!-- ENGRAVING STYLE -->
-      <div class="control-group">
-        <h3>Engraving Style</h3>
-        <div class="toggle-group">
-          <div class="toggle-btn active" id="btn-car" onclick="setGraphicType('car')">F1 Car Profile</div>
-          <div class="toggle-btn" id="btn-track" onclick="setGraphicType('track')">Circuit Layout</div>
+      <div class="accordion">
+        
+        <div class="accordion-item active">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>00. Watch Model</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <label class="config-label">Watch Compatibility</label>
+              <div class="pill-group">
+                <button class="pill active" onclick="setWatchType('classic', 'Classic Round', this)">Classic</button>
+                <button class="pill" onclick="setWatchType('apple', 'Apple Watch', this)">Apple Watch</button>
+                <button class="pill" onclick="setWatchType('diver', 'Pro Diver', this)">Pro Diver</button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div id="track-selector-wrapper">
-          <select class="input-field" id="track-select" onchange="updateTrack(this.value)">
-            <option value="RaceCircuitAlbertPark.svg">Albert Park</option>
-            <option value="RaceCircuitAmericas.svg">Circuit of the Americas</option>
-            <option value="RaceCircuitAutodromaDiMonza.svg">Autodromo Nazionale Monza</option>
-            <option value="RaceCircuitBahrain.svg">Bahrain International Circuit</option>
-            <option value="RaceCircuitGillesBaku.svg">Baku City Circuit</option>
-            <option value="RaceCircuitMarinaBay.svg">Marina Bay Street Circuit</option>
-            <option value="RaceCircuitMonaco.svg">Circuit de Monaco</option>
-            <option value="RaceCircuitRedBull.svg">Red Bull Ring</option>
-            <option value="RaceCircuitShanghai.svg">Shanghai International Circuit</option>
-            <option value="RaceCircuitSpa.svg">Circuit de Spa-Francorchamps</option>
-            <option value="RaceCircuitSuzuka.svg">Suzuka International Racing Course</option>
-          </select>
-        </div>
-      </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>01. Material & Lining</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <label class="config-label">Leather: <span id="color-label">Maranello Red</span></label>
+              <div class="color-grid">
+                <div class="swatch active" style="background: #e10600;" onclick="setColor('#e10600', 'Maranello Red', this)"></div>
+                <div class="swatch" style="background: #004225;" onclick="setColor('#004225', 'Racing Green', this)"></div>
+                <div class="swatch" style="background: #111;" onclick="setColor('#000000', 'Stealth Black', this)"></div>
+                <div class="swatch" style="background: #1a237e;" onclick="setColor('#1a237e', 'Alpine Blue', this)"></div>
+                <div class="swatch" style="background: #ff8700;" onclick="setColor('#ff8700', 'Papaya', this)"></div>
+              </div>
 
-      <!-- INITIALS -->
-      <div class="control-group">
-        <h3>Monogram Initials</h3>
-        <input type="text" class="input-field" maxlength="3" placeholder="e.g. MV1" oninput="updateInitials(this.value)">
-      </div>
+              <label class="config-label" style="margin-top: 24px;">Texture</label>
+              <div class="pill-group">
+                <button class="pill active" onclick="setTexture('grained', 'Full Grain', this)">Grained</button>
+                <button class="pill" onclick="setTexture('carbon', 'Carbon Fiber', this)">Carbon</button>
+                <button class="pill" onclick="setTexture('suede', 'Alcantara', this)">Suede</button>
+              </div>
 
-      <!-- STRAP WIDTH -->
-      <div class="control-group">
-        <h3><span>Strap Width</span> <span class="selection-label" id="width-label">20mm</span></h3>
-        <div class="pill-group">
-          <button class="pill" onclick="setWidth('168px', '18mm', this)">18mm</button>
-          <button class="pill active" onclick="setWidth('200px', '20mm', this)">20mm</button>
-          <button class="pill" onclick="setWidth('232px', '22mm', this)">22mm</button>
-        </div>
-      </div>
+              <label class="config-label" style="margin-top: 24px;">Lining: <span id="lining-label">Beige Nappa</span></label>
+              <div class="color-grid">
+                <div class="swatch active" style="background: #e5d3b3;" onclick="setLining('#e5d3b3', 'Beige Nappa', this)"></div>
+                <div class="swatch" style="background: #8b4513;" onclick="setLining('#8b4513', 'Saddle Brown', this)"></div>
+                <div class="swatch" style="background: #e10600;" onclick="setLining('#e10600', 'Racing Red', this)"></div>
+              </div>
 
-      <!-- STITCH COLOUR -->
-      <div class="control-group">
-        <h3><span>Thread Colour</span> <span class="selection-label" id="stitch-label">White</span></h3>
-        <div class="stitch-grid">
-          <div class="stitch-swatch active" style="color: rgba(255,255,255,0.8);" onclick="setStitch('rgba(255,255,255,0.8)', 'White', this)"></div>
-          <div class="stitch-swatch" style="color: #e10600;" onclick="setStitch('#e10600', 'Racing Red', this)"></div>
-          <div class="stitch-swatch" style="color: #ff8700;" onclick="setStitch('#ff8700', 'Papaya Orange', this)"></div>
-          <div class="stitch-swatch" style="color: #27f4d2;" onclick="setStitch('#27f4d2', 'Brackley Teal', this)"></div>
-          <div class="stitch-swatch" style="color: #f5c518;" onclick="setStitch('#f5c518', 'Gold', this)"></div>
-          <div class="stitch-swatch" style="color: rgba(0,0,0,0.5);" onclick="setStitch('rgba(0,0,0,0.5)', 'Black', this)" style="background: rgba(255,255,255,0.05);"></div>
+              <label class="config-label" style="margin-top: 24px;">Thread Stitching</label>
+              <div class="pill-group">
+                <button class="pill active" onclick="setStitch('rgba(255,255,255,0.15)', 'Tonal', this)">Tonal</button>
+                <button class="pill" onclick="setStitch('#e10600', 'Racing Red', this)">Racing Red</button>
+                <button class="pill" onclick="setStitch('#ff8700', 'Papaya', this)">Papaya</button>
+                <button class="pill" onclick="setStitch('#ffffff', 'Contrast White', this)">Contrast White</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- ENGRAVING INTENSITY -->
-      <div class="control-group">
-        <h3>Engraving Intensity</h3>
-        <div class="range-wrap">
-          <input type="range" min="30" max="100" value="90" id="intensity-range" oninput="setIntensity(this.value)">
-          <span class="range-label" id="intensity-label">90%</span>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>02. Graphics & Engraving</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <div class="toggle-group">
+                <button id="btn-car" class="pill active" onclick="setGraphicType('car')">F1 Silhouette</button>
+                <button id="btn-track" class="pill" onclick="setGraphicType('track')">Race Circuit</button>
+              </div>
+              <div id="track-selector-wrapper" style="display:none; margin-top: 24px;">
+                <select id="track-select" class="input-field" onchange="updateTrack(this.value)">
+                  <option value="RaceCircuitAutodromaDiMonza.svg">Monza</option>
+                  <option value="RaceCircuitMonaco.svg">Monaco</option>
+                  <option value="RaceCircuitSpa.svg">Spa-Francorchamps</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>03. Monogram & Font</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <input type="text" class="input-field" maxlength="3" placeholder="ABC" oninput="updateInitials(this.value)">
+              <div class="pill-group" style="margin-top: 16px;">
+                <button class="pill active" onclick="setFontStyle('italic', 'Italic', this)">Italic</button>
+                <button class="pill" onclick="setFontStyle('normal', 'Block', this)">Block</button>
+                <button class="pill" onclick="setFontStyle('serif', 'Serif', this)">Serif</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>04. Hardware & Clasp</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <label class="config-label">Hardware: <span id="hw-label-real">Steel</span></label>
+              <div class="color-grid">
+                <div class="swatch active" style="background: linear-gradient(135deg,#eee,#888);" onclick="setHardware('silver','#C0C0C0','Steel',this)"></div>
+                <div class="swatch" style="background: linear-gradient(135deg,#ffd700,#b8860b);" onclick="setHardware('gold','#D4AF37','Gold',this)"></div>
+                <div class="swatch" style="background: #111;" onclick="setHardware('black','#222','Black PVD',this)"></div>
+              </div>
+              <label class="config-label" style="margin-top: 24px;">Buckle</label>
+              <div class="pill-group">
+                <button class="pill active" onclick="setBuckle('Tang', 0, this)">Tang</button>
+                <button class="pill" onclick="setBuckle('Deployant', 20, this)">Deployant (+£20)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>05. Precision Extras</h3><span class="chevron">&#9662;</span>
+          </div>
+          <div class="accordion-content">
+            <div class="control-group-inner">
+              <div class="extra-toggle" onclick="toggleQR(this.querySelector('.toggle-switch'))">
+                <div class="toggle-switch" id="qr-toggle"><div class="toggle-knob"></div></div>
+                <div class="extra-info"><strong>Quick-Release (+£10)</strong></div>
+              </div>
+              <div class="extra-toggle" style="margin-top: 16px;" onclick="toggleKeeper(this.querySelector('.toggle-switch'))">
+                <div class="toggle-switch" id="keeper-toggle"><div class="toggle-knob"></div></div>
+                <div class="extra-info"><strong>Leather Keeper (+£5)</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- CHECKOUT -->
       <div class="checkout-area">
-        <div class="price">£45</div>
-        <button class="checkout-btn">Lock In Design</button>
+        <div>
+          <div class="price" id="price-display">£45</div>
+          <div class="price-subtitle">Bespoke construction included</div>
+        </div>
+        <button class="checkout-btn" onclick="openSummary()">Review Order</button>
       </div>
-      <button class="share-btn" onclick="shareDesign()">
-        &#128279; Share Your Design
-      </button>
 
     </div>
   </main>
+
+  <div class="modal-overlay" id="summary-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeSummary()">&times;</button>
+      <div class="section-eyebrow">Review</div>
+      <h2>Order Summary</h2>
+      <div class="summary-grid">
+        <div class="summary-item"><span>Chrono-Series Strap</span><span>£45.00</span></div>
+        <div id="summary-extras"></div>
+        <div class="summary-total"><span>Total</span><span id="summary-total-price">£45.00</span></div>
+      </div>
+      <div class="summary-details">
+        <p><strong>Watch:</strong> <span id="sum-model">Classic</span></p>
+        <p><strong>Leather:</strong> <span id="sum-leather">Maranello Red</span></p>
+        <p><strong>Hardware:</strong> <span id="sum-hw">Steel</span></p>
+      </div>
+      <button class="btn-primary" style="width: 100%; margin-top: 32px;" onclick="addToBasket()">Add to Basket</button>
+    </div>
+  </div>
 
   <div class="toast" id="toast"></div>
   <script src="main.js"></script>
