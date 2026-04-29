@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design | Formula Strap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo-wrapper">
+      <img src="formula-1-carro-de-corrida-shell-piloto-rac-logo-png_seeklogo-642919.png" alt="Car Logo" class="logo-icon">
+      <div class="logo">FORMULA<span>STRAP</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="design.html" class="active">Customiser</a>
+      <a href="ethos.html">Ethos</a>
+    </div>
+  </nav>
+
+  <main class="config-main">
+    <!-- LEFT: PREVIEW -->
+    <div class="preview-container">
+      <div class="strap" id="strap">
+        <div class="engraving-container">
+          <!-- Car Graphic (Rotated +90deg as requested) -->
+          <div id="car-svg-container">
+            <img src="image-Picsart-BackgroundRemover.png" alt="F1 Car Silhouette" style="width: 340px; height: auto; transform: rotate(90deg); filter: drop-shadow(10px 15px 15px rgba(0,0,0,0.8));">
+          </div>
+          
+          <!-- Track Graphic -->
+          <div id="track-svg-container">
+            <img id="track-image" src="RaceCircuitAlbertPark.svg" alt="Circuit Layout" style="width: 150px; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));">
+          </div>
+
+          <div id="strap-initials">F1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: CONTROLS -->
+    <div class="controls-container">
+      
+      <div class="header-text">
+        <h1>Design Your Legacy</h1>
+        <p>Premium vegetable-tanned leather. Precision laser engraving. Choose your finish, select your circuit, and make it yours.</p>
+      </div>
+
+      <!-- COLOR -->
+      <div class="control-group">
+        <h3><span>Leather Finish</span> <span class="selection-label" id="color-label">Carbon Black</span></h3>
+        <div class="color-grid">
+          <div class="swatch active" style="background: #111111;" onclick="setColor('#111111', 'Carbon Black', this)"></div>
+          <div class="swatch" style="background: #8b5a2b;" onclick="setColor('#8b5a2b', 'Traditional Heritage Tan', this)"></div>
+          <div class="swatch" style="background: #061121;" onclick="setColor('#061121', 'Milton Keynes Blue', this)"></div>
+          <div class="swatch" style="background: #dc0000;" onclick="setColor('#dc0000', 'Maranello Red', this)"></div>
+          <div class="swatch" style="background: #ff8700;" onclick="setColor('#ff8700', 'Woking Papaya', this)"></div>
+          <div class="swatch" style="background: #00a19b;" onclick="setColor('#00a19b', 'Silverstone Green', this)"></div>
+        </div>
+      </div>
+
+      <!-- ENGRAVING STYLE -->
+      <div class="control-group">
+        <h3>Engraving Style</h3>
+        <div class="toggle-group">
+          <div class="toggle-btn active" id="btn-car" onclick="setGraphicType('car')">F1 Car Profile</div>
+          <div class="toggle-btn" id="btn-track" onclick="setGraphicType('track')">Circuit Layout</div>
+        </div>
+
+        <div id="track-selector-wrapper">
+          <select class="input-field" id="track-select" onchange="updateTrack(this.value)">
+            <option value="RaceCircuitAlbertPark.svg">Albert Park</option>
+            <option value="RaceCircuitAmericas.svg">Circuit of the Americas</option>
+            <option value="RaceCircuitAutodromaDiMonza.svg">Autodromo Nazionale Monza</option>
+            <option value="RaceCircuitBahrain.svg">Bahrain International Circuit</option>
+            <option value="RaceCircuitGillesBaku.svg">Baku City Circuit</option>
+            <option value="RaceCircuitMarinaBay.svg">Marina Bay Street Circuit</option>
+            <option value="RaceCircuitMonaco.svg">Circuit de Monaco</option>
+            <option value="RaceCircuitRedBull.svg">Red Bull Ring</option>
+            <option value="RaceCircuitShanghai.svg">Shanghai International Circuit</option>
+            <option value="RaceCircuitSpa.svg">Circuit de Spa-Francorchamps</option>
+            <option value="RaceCircuitSuzuka.svg">Suzuka International Racing Course</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- INITIALS -->
+      <div class="control-group">
+        <h3>Monogram Initials</h3>
+        <input type="text" class="input-field" maxlength="3" placeholder="e.g. MV1" oninput="updateInitials(this.value)">
+      </div>
+
+      <!-- STRAP WIDTH -->
+      <div class="control-group">
+        <h3><span>Strap Width</span> <span class="selection-label" id="width-label">20mm</span></h3>
+        <div class="pill-group">
+          <button class="pill" onclick="setWidth('168px', '18mm', this)">18mm</button>
+          <button class="pill active" onclick="setWidth('200px', '20mm', this)">20mm</button>
+          <button class="pill" onclick="setWidth('232px', '22mm', this)">22mm</button>
+        </div>
+      </div>
+
+      <!-- STITCH COLOUR -->
+      <div class="control-group">
+        <h3><span>Thread Colour</span> <span class="selection-label" id="stitch-label">White</span></h3>
+        <div class="stitch-grid">
+          <div class="stitch-swatch active" style="color: rgba(255,255,255,0.8);" onclick="setStitch('rgba(255,255,255,0.8)', 'White', this)"></div>
+          <div class="stitch-swatch" style="color: #e10600;" onclick="setStitch('#e10600', 'Racing Red', this)"></div>
+          <div class="stitch-swatch" style="color: #ff8700;" onclick="setStitch('#ff8700', 'Papaya Orange', this)"></div>
+          <div class="stitch-swatch" style="color: #27f4d2;" onclick="setStitch('#27f4d2', 'Brackley Teal', this)"></div>
+          <div class="stitch-swatch" style="color: #f5c518;" onclick="setStitch('#f5c518', 'Gold', this)"></div>
+          <div class="stitch-swatch" style="color: rgba(0,0,0,0.5);" onclick="setStitch('rgba(0,0,0,0.5)', 'Black', this)" style="background: rgba(255,255,255,0.05);"></div>
+        </div>
+      </div>
+
+      <!-- ENGRAVING INTENSITY -->
+      <div class="control-group">
+        <h3>Engraving Intensity</h3>
+        <div class="range-wrap">
+          <input type="range" min="30" max="100" value="90" id="intensity-range" oninput="setIntensity(this.value)">
+          <span class="range-label" id="intensity-label">90%</span>
+        </div>
+      </div>
+
+      <!-- CHECKOUT -->
+      <div class="checkout-area">
+        <div class="price">£45</div>
+        <button class="checkout-btn">Lock In Design</button>
+      </div>
+      <button class="share-btn" onclick="shareDesign()">
+        &#128279; Share Your Design
+      </button>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="main.js"></script>
+</body>
+</html>
