@@ -370,8 +370,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const glow = document.querySelector('.studio-glow');
 
   if (previewContainer && watchAssembly) {
-    watchAssembly.style.transition = `transform 0.1s ease`;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let targetGlowX = previewContainer.clientWidth / 2;
+    let targetGlowY = previewContainer.clientHeight / 2;
+    let currentGlowX = targetGlowX;
+    let currentGlowY = targetGlowY;
+    let isHovering = false;
+
+    // Remove CSS transitions when lerping for immediate but smooth response
+    watchAssembly.style.transition = 'none';
+
+    function animate() {
+      // Lerp logic
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      
+      currentGlowX += (targetGlowX - currentGlowX) * 0.1;
+      currentGlowY += (targetGlowY - currentGlowY) * 0.1;
+
+      watchAssembly.style.transform = `scale(0.85) rotateX(${currentY}deg) rotateY(${currentX}deg)`;
+      
+      if (glow) {
+        glow.style.left = `${currentGlowX - 400}px`;
+        glow.style.top = `${currentGlowY - 400}px`;
+      }
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
     previewContainer.addEventListener('mousemove', (e) => {
+      isHovering = true;
       const rect = previewContainer.getBoundingClientRect();
       const x = e.clientX - rect.left; 
       const y = e.clientY - rect.top;  
@@ -379,21 +411,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       
-      const rotateX = ((y - centerY) / centerY) * -15; 
-      const rotateY = ((x - centerX) / centerX) * 15;
-      watchAssembly.style.transform = `scale(0.85) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-      // Subtly shift glow
-      if (glow) {
-        glow.style.left = `${x - 300}px`;
-        glow.style.top = `${y - 300}px`;
-      }
+      targetY = ((y - centerY) / centerY) * -18; // rotateX
+      targetX = ((x - centerX) / centerX) * 18;  // rotateY
+      
+      targetGlowX = x;
+      targetGlowY = y;
     });
 
     previewContainer.addEventListener('mouseleave', () => {
-      watchAssembly.style.transform = `scale(0.85) rotateX(0deg) rotateY(0deg)`;
-      watchAssembly.style.transition = `transform 0.8s cubic-bezier(0.2, 1, 0.3, 1)`; 
-      setTimeout(() => watchAssembly.style.transition = `transform 0.1s ease`, 800);
+      isHovering = false;
+      targetX = 0;
+      targetY = 0;
+      targetGlowX = previewContainer.clientWidth / 2;
+      targetGlowY = previewContainer.clientHeight / 2;
     });
   }
 
